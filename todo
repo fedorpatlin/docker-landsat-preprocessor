@@ -1,0 +1,3 @@
+TODOS
+- add volumes for resultdir
+- add entrypoint script with optional database initialization
