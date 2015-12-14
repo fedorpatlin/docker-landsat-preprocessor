@@ -1,20 +1,22 @@
 FROM centos:7
 MAINTAINER patlin.f@sovzond.center
 
-ENV GRASS_HOME=/opt/grassgis
+ENV GRASS_HOME=/opt/grassgis\
+    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz\
+    GRASS_ARCHIVE=/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz
 
-RUN curl https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-30_11_2015.tar.gz > /grass-7.0.3svn-x86_64-unknown-linux-gnu-30_11_2015.tar.gz\
+RUN curl $GRASS_URL > $GRASS_ARCHIVE\
   && mkdir -p $GRASS_HOME\
   && cd $GRASS_HOME\
-  && tar -zxvf /grass-7.0.3svn-x86_64-unknown-linux-gnu-30_11_2015.tar.gz\
-  && rm -f /grass-7.0.3svn-x86_64-unknown-linux-gnu-30_11_2015.tar.gz
+  && tar -zxvf $GRASS_ARCHIVE\
+  && rm -f $GRASS_ARCHIVE
 
 RUN yum install -y unzip\
-    python-virtualenv\
     epel-release\
     curl\
     wget\
   && yum install -y python-pip\
+    python-virtualenv\
     geos\
     geos-python\
     gcc\
