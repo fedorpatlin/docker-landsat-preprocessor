@@ -58,5 +58,7 @@ elif [ "$1" = "deploy_db" ]; then
   deploy_database;
 elif [ "$1" = "help" ]; then
   echo "Available commands are: monitor, deploy_db.";
+else
+  exec "$@"
 fi
 exit 0
