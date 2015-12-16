@@ -72,7 +72,8 @@ CMD [ "monitor" ]
 RUN echo -e '#!/bin/bash \n\
 cd $NEXTGIS_HOME/monitor \n\
 source $NEXTGIS_ENV/bin/activate \n\
-celery worker -A pyramid_celery.celery_app --ini development.ini \n'\
+#celery worker -A pyramid_celery.celery_app --ini development.ini \n'\
+celery worker -A pyramid_celery.celery_app --ini development.ini -B \n'\
 > /bin/celery-start.sh\
 \
  && echo -e '#!/bin/bash \n\
