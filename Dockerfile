@@ -115,7 +115,7 @@ stdout_logfile=/dev/fd/1 \n\
 stdout_logfile_maxbytes=0 \n\
  \n\
 [program: celery] \n\
-command=gosu celery /bin/celery-start.sh \n\
+command=gosu nextgis /bin/celery-start.sh \n\
 priority=999 \n\
 autostart=true \n\
 autorestart=unexpected \n\
