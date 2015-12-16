@@ -1,0 +1,19 @@
+node1:
+  image: docker.ltmn.sovzond.center:5000/nextgis-centos7:latest
+  volumes: 
+    - "/var/lib/monitor"
+  ports: 
+    - "6543:6543"
+  name: nextgis
+  hostname: nextgis1
+  environment:
+    MONITOR_EE_LOGIN: sovzond.center
+    MONITOR_EE_PASSWORD: VpJr0rlOvKZit49g
+    MONITOR_DB_USER: postgres
+    MONITOR_DB_PASSWORD: stL_5Br
+    MONITOR_DB_HOST: serverdb01.ltmn.sovzond.center
+    MONITOR_DB_NAME: ndvidb
+    GRASSGIS_HOME: "/opt/grassgis"
+    MONITOR_FS_GRASSDATA: "/var/lib/monitor/grass"
+    MONITOR_FS_POOL: "/var/lib/monitor/pool"
+    MONITOR_FS_RESULT: "/var/lib/monitor/result"
