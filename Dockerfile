@@ -2,20 +2,27 @@ FROM centos:7
 MAINTAINER patlin.f@sovzond.center
 
 ENV GRASS_HOME=/opt/grassgis\
-    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz\
-    GRASS_ARCHIVE=/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz
+    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-16_12_2015.tar.gz\
+    GRASSINST_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-16_12_2015-install.sh\
+    GRASS_ARCHIVE=/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz\
+    GRASSINST=/grass-install.sh
+
+RUN  yum install -y epel-release\
+  && yum install -y proj\
+                    freetype\
+  && yum clean all && echo "" > /var/log/yum*
 
 RUN curl $GRASS_URL > $GRASS_ARCHIVE\
-  && mkdir -p $GRASS_HOME\
-  && cd $GRASS_HOME\
-  && tar -zxvf $GRASS_ARCHIVE\
-  && rm -f $GRASS_ARCHIVE
+  && curl $GRASSINST_URL > $GRASSINST && chmod +x $GRASSINST\
+  && rm -rf $GRASS_HOME\
+  && $GRASSINST $GRASS_ARCHIVE $GRASS_HOME $GRASS_HOME\
+  && rm -f $GRASS_ARCHIVE\
+  && rm -f $GRASSINST
 
 RUN yum install -y unzip\
-    epel-release\
     curl\
     wget\
-  && yum install -y python-pip\
+    python-pip\
     python-virtualenv\
     geos\
     geos-python\
@@ -26,6 +33,7 @@ RUN yum install -y unzip\
     postgresql-devel\
     rabbitmq-server\
     supervisor\
+    gdal\
   && yum clean all && echo "" > /var/log/yum.log
   
 ENV NEXTGIS_HOME=/opt/landsat_preprocess-master\
