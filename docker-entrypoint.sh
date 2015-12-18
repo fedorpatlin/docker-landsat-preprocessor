@@ -1,6 +1,6 @@
 #!/bin/bash
-
-MONITOR_CONFIG=$NEXTGIS_HOME/monitor/development.ini
+PATH=$PATH:"$GRASS_HOME"
+MONITOR_CONFIG="$NEXTGIS_HOME/monitor/development.ini"
 
 function deploy_database {
   echo "Not implemented yet"
@@ -48,6 +48,12 @@ function setup_program {
     mkdir -p "$MONITOR_FS_RESULT"
     chown -R "$NEXTGIS_USER": "$MONITOR_FS_RESULT"
   else echo "MONITOR_FS_RESULT not set. Using default value"
+  fi
+  if [ ! -z "$MONITOR_FS_TMP" ]; then
+    sed -i "s|tmp.dir = /var/local/monitor/tmp|tmp.dir = $MONITOR_FS_TMP|g" "$MONITOR_CONFIG"
+    mkdir -p "$MONITOR_FS_TMP"
+    chown -R "$NEXTGIS_USER": "$MONITOR_FS_TMP"
+  else echo "WARNING! MONITOR_FS_TMP not set. Using default value"
   fi
 }
 
