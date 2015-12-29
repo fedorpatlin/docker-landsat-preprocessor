@@ -42,8 +42,6 @@ ENV NEXTGIS_HOME=/opt/landsat_preprocess-master\
 
 COPY landsat_preprocess-master $NEXTGIS_HOME
 
-#COPY config.ini $NEXTGIS_HOME/monitor/development.ini
-
 WORKDIR $NEXTGIS_HOME/monitor
 
 COPY gosu /bin/
