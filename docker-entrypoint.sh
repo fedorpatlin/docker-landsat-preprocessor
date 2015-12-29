@@ -3,7 +3,8 @@ PATH=$PATH:"$GRASS_HOME"
 MONITOR_CONFIG="$NEXTGIS_HOME/monitor/development.ini"
 
 function deploy_database {
-  echo "Not implemented yet"
+  source $NEXTGIS_ENV/bin/activate
+  initialize_monitor_db development.ini
 }
 
 function setup_program {
@@ -61,6 +62,7 @@ if [ "$1" = "monitor" ]; then
   setup_program;
   supervisord;
 elif [ "$1" = "deploy_db" ]; then
+  setup_program;
   deploy_database;
 elif [ "$1" = "help" ]; then
   echo "Available commands are: monitor, deploy_db.";
