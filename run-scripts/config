@@ -1,0 +1,12 @@
+MONITOR_EE_USER=ndvi
+MONITOR_EE_PASSWORD=ndvi
+MONITOR_DB_USER=ndvipg
+MONITOR_DB_PASSWORD=password
+MONITOR_DB_HOST=database.example.com
+MONITOR_DB_NAME=ndvidb
+GRASSGIS_HOME="/opt/grassgis"
+MONITOR_FS_GRASSDATA="/var/lib/monitor/grass"
+MONITOR_FS_POOL="/var/lib/monitor/pool"
+MONITOR_FS_RESULT="/var/lib/monitor/result"
+MONITOR_FS_TMP="/var/lib/monitor/temp"
+
