@@ -2,8 +2,8 @@ FROM centos:7
 MAINTAINER patlin.f@sovzond.center
 
 ENV GRASS_HOME=/opt/grassgis\
-    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-16_12_2015.tar.gz\
-    GRASSINST_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-16_12_2015-install.sh\
+    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-29_12_2015.tar.gz\
+    GRASSINST_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-29_12_2015-install.sh\
     GRASS_ARCHIVE=/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz\
     GRASSINST=/grass-install.sh
 
