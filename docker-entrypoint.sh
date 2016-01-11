@@ -9,7 +9,7 @@ function deploy_database {
 
 function setup_program {
 # Check missing parameter tmp.dir
-if [ ! $(grep 'tmp.dir =' "$MONITOR_CONFIG") ]; then # tmp.dir is missing in default config. Need to apply patch.
+if [ ! "$(grep 'tmp.dir =' "$MONITOR_CONFIG")" ]; then # tmp.dir is missing in default config. Need to apply patch.
   patch -p1 "$MONITOR_CONFIG" << EOPATCH
 *************** result.dir = /var/local/monitor/result
 *** 45,46 ****
