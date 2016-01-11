@@ -34,6 +34,7 @@ RUN yum install -y unzip\
     rabbitmq-server\
     supervisor\
     gdal\
+    patch\
   && yum clean all && echo "" > /var/log/yum.log
   
 ENV NEXTGIS_HOME=/opt/landsat_preprocess-master\

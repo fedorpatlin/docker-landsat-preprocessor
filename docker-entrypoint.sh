@@ -8,6 +8,19 @@ function deploy_database {
 }
 
 function setup_program {
+# Check missing parameter tmp.dir
+if [ ! $(grep 'tmp.dir =' "$MONITOR_CONFIG") ]; then # tmp.dir is missing in default config. Need to apply patch.
+  patch -p1 "$MONITOR_CONFIG" << EOPATCH
+*************** result.dir = /var/local/monitor/result
+*** 45,46 ****
+--- 45,48 ----
+  
++ tmp.dir = /var/local/monitor/tmp
++ 
+  # By default, the toolbar only appears for clients from IP addresses
+EOPATCH
+fi 
+
 #
 # Database setup
   sed -i "s/dbuser = ndviuser/dbuser = $MONITOR_DB_USER/g" "$MONITOR_CONFIG"
@@ -51,7 +64,7 @@ function setup_program {
   else echo "MONITOR_FS_RESULT not set. Using default value"
   fi
   if [ ! -z "$MONITOR_FS_TMP" ]; then
-    sed -i "s|tmp.dir = /var/local/monitor/tmp|tmp.dir = $MONITOR_FS_TMP|g" "$MONITOR_CONFIG"
+    sed -i "s|tmp.dir = .*|tmp.dir = $MONITOR_FS_TMP|g" "$MONITOR_CONFIG"
     mkdir -p "$MONITOR_FS_TMP"
     chown -R "$NEXTGIS_USER": "$MONITOR_FS_TMP"
   else echo "WARNING! MONITOR_FS_TMP not set. Using default value"
