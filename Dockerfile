@@ -159,4 +159,23 @@ stderr_logfile=/dev/stderr \n\
 stderr_logfile_maxbytes=0 \n'\
  > /etc/supervisord.conf
 
-
+RUN echo -e '*** landsat_preprocess-master/monitor/development.ini   2015-12-26 00:20:26.000000000 +0500\n\
+--- development.changed 2016-01-12 12:49:56.621547455 +0500\n\
+*************** task = monitor.processing.processing.pro\n\
+*** 65,67 ****\n\
+  type = crontab\n\
+! schedule = {"minute": "0", "hour": "0", "day_of_week": "*/7"}\n\
+\n\
+--- 65,67 ----\n\
+  type = crontab\n\
+! schedule = {"minute": "0", "hour": "*/1"}\n\
+\n\
+*************** task = monitor.processing.processing.che\n\
+*** 70,72 ****\n\
+  type = crontab\n\
+! schedule = {"minute": "0", "hour": "0", "day_of_week": "*/7"}\n\
+\n\
+--- 70,72 ----\n\
+  type = crontab\n\
+! schedule = {"minute": "0", "hour": "*/1"}\n\
+'| patch -p1 development.ini
