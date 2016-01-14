@@ -2,24 +2,21 @@ FROM centos:7
 MAINTAINER patlin.f@sovzond.center
 
 ENV GRASS_HOME=/opt/grassgis\
-    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-29_12_2015.tar.gz\
-    GRASSINST_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-unknown-linux-gnu-29_12_2015-install.sh\
+    GRASS_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-pc-linux-gnu-13_01_2016.tar.gz\
+    GRASSINST_URL=https://grass.osgeo.org/grass70/binary/linux/snapshot/grass-7.0.3svn-x86_64-pc-linux-gnu-13_01_2016-install.sh\
     GRASS_ARCHIVE=/grass-7.0.3svn-x86_64-unknown-linux-gnu-13_12_2015.tar.gz\
     GRASSINST=/grass-install.sh
 
-RUN  yum install -y epel-release\
-  && yum install -y proj\
-                    freetype\
-  && yum clean all && echo "" > /var/log/yum*
+ENV NEXTGIS_HOME=/opt/landsat_preprocess-master\
+    NEXTGIS_USER=nextgis\
+    CELERY_USER=celery\
+    PATH=$PATH:$GRASSGIS_HOME\
+    NEXTGIS_ENV=ng-env
 
-RUN curl $GRASS_URL > $GRASS_ARCHIVE\
-  && curl $GRASSINST_URL > $GRASSINST && chmod +x $GRASSINST\
-  && rm -rf $GRASS_HOME\
-  && $GRASSINST $GRASS_ARCHIVE $GRASS_HOME $GRASS_HOME\
-  && rm -f $GRASS_ARCHIVE\
-  && rm -f $GRASSINST
-
-RUN yum install -y unzip\
+RUN yum install -y epel-release\
+ && yum install -y unzip\
+    proj\
+    freetype\
     curl\
     wget\
     python-pip\
@@ -36,18 +33,20 @@ RUN yum install -y unzip\
     gdal\
     patch\
   && yum clean all && echo "" > /var/log/yum.log
-  
-ENV NEXTGIS_HOME=/opt/landsat_preprocess-master\
-    NEXTGIS_USER=nextgis\
-    CELERY_USER=celery
+
+RUN curl $GRASS_URL > $GRASS_ARCHIVE\
+  && curl $GRASSINST_URL > $GRASSINST && chmod +x $GRASSINST\
+  && rm -rf $GRASS_HOME\
+  && $GRASSINST $GRASS_ARCHIVE $GRASS_HOME $GRASS_HOME\
+  && rm -f $GRASS_ARCHIVE\
+  && rm -f $GRASSINST
 
 COPY landsat_preprocess-master $NEXTGIS_HOME
 
 WORKDIR $NEXTGIS_HOME/monitor
 
-COPY gosu /bin/
-ENV NEXTGIS_ENV=ng-env
-RUN adduser $CELERY_USER\
+RUN curl https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /bin/gosu\
+  && adduser $CELERY_USER\
   && touch /bin/celery-start.sh && touch /bin/monitor-start.sh\
   && adduser $NEXTGIS_USER\
   && chmod +x /bin/gosu /bin/celery-start.sh /bin/monitor-start.sh\
