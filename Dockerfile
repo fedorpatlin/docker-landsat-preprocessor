@@ -45,7 +45,7 @@ COPY landsat_preprocess-master $NEXTGIS_HOME
 
 WORKDIR $NEXTGIS_HOME/monitor
 
-RUN curl https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /bin/gosu\
+RUN curl -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 > /bin/gosu\
   && adduser $CELERY_USER\
   && touch /bin/celery-start.sh && touch /bin/monitor-start.sh\
   && adduser $NEXTGIS_USER\
@@ -71,6 +71,7 @@ ENTRYPOINT [ "/bin/entrypoint.sh" ]
 
 CMD [ "monitor" ]
 
+ENV PATH=$PATH:$GRASS_HOME
 ################################################
 # Create configuration files and shell-scripts #
 ################################################
